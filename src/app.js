@@ -21,6 +21,8 @@ const channels = require('./channels');
 
 const mongodb = require('./mongodb');
 
+const authentication = require('./authentication');
+
 const app = express(feathers());
 
 // Load app configuration
@@ -43,6 +45,7 @@ app.configure(mongodb);
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
+app.configure(authentication);
 // Set up our services (see `services/index.js`)
 app.configure(services);
 // Set up event channels (see channels.js)
@@ -56,28 +59,5 @@ app.hooks(appHooks);
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
-
-// Connect to mongodb
-MongoClient.connect('mongodb://localhost:27017/nodeapp').then(function(db){
-  // Connect to the db, create and register a Feathers service.
-  app.use('/messages', service({
-    Model: db.collection('messages'),
-    paginate: {
-      default: 2,
-      max: 4
-    }
-  }));
-
-  // A basic error handler, just like Express
-  app.use(errors.handler());
-
-  // Start the server
-  const server = app.listen(3030);
-  server.on('listening', function() {
-    console.log('Feathers Message MongoDB service running on 127.0.0.1:3030');
-  });
-}).catch(function(error){
-  console.error(error);
-});
 
 module.exports = app;

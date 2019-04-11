@@ -6,5 +6,29 @@
     "default": 10,
     "max": 50
   },
-  "mongodb": "mongodb://localhost:27017/funapp"
+  "mongodb": "mongodb://localhost:27017/funapp",
+  "authentication": {
+    "secret": "2950aabe2d7b572bd913b94f43a87cc04269a903bd1923729f2bbebc9eb97e614714f6e2423509db937b68db961195e5f74c83c5bdabf34f1fa33e05a9ab41712f526e655214c57da9a66e2071c823863fabfa93d18336bbe82c08532bd6e8b809a5cb8133fa59f7d1f4302f903eee65b796b28be625fe8a661a70311014e311b3b2a7527c8583e8c374e8a9351edcc3e381cc2477cf48ca632aa4cc861ddecb7f0f6ebf9b1a1d2f8f2d86325bb8f572688295a9e71266e55fff8b7ace07109bcbf6d2bc9fd7c5643b0307223b5148e1411578f15cd17c8ea50447c9cb8e9fa36c51d692b85fed962e1830def4c2ec1c0f807160baa9ba9b7cec64e27a747fe7",
+    "strategies": [
+      "jwt",
+      "local"
+    ],
+    "path": "/authentication",
+    "service": "users",
+    "jwt": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "subject": "anonymous",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "entity": "user",
+      "usernameField": "email",
+      "passwordField": "password"
+    }
+  }
 }
