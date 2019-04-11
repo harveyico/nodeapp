@@ -9,10 +9,7 @@ const feathers = require('@feathersjs/feathers');
 const configuration = require('@feathersjs/configuration');
 const express = require('@feathersjs/express');
 const socketio = require('@feathersjs/socketio');
-const errors = require('@feathersjs/errors');
 const bodyParser = require('body-parser');
-const { MongoClient } = require('mongodb')
-const service = require('feathers-mongodb');
 
 const middleware = require('./middleware');
 const services = require('./services');
@@ -57,7 +54,7 @@ app.use(express.errorHandler({ logger }));
 
 app.hooks(appHooks);
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 module.exports = app;
